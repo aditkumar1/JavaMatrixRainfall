@@ -1,7 +1,7 @@
 # JavaMatrixRainfall
 This application simulates the matrix rainfall as shown in matrix movie. I have tried to improve code readability as much as possible.
 <br/>
-#Matrix background animation
+#Matrix background animation<br/>
 1)A row is represented by Jpanel.<br/>
 2)A jpanel(row) contains a group of Jlabels representing a random character.<br/>
 3)created multiple jpanels(rows) and added them to frame.<br/>
