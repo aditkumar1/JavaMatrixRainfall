@@ -8,4 +8,4 @@ This application simulates the matrix rainfall as shown in matrix movie. I have 
 4)An array of each Jpanel is maintained.<br/>
 5)To perform animation , I moved position of each panel in array to next position and initialized the first row with random characters.<br/>
 6) Here is a sample captured from my screen- <br/>![alt text](https://github.com/aditkumar1/JavaMatrixRainfall/blob/master/sample.PNG)<br/><br/>
-If you interested in integrating real time camera feed on it then look at <a htref="https://github.com/aditkumar1/Matrix-Vision">this</a> project
+If you interested in integrating real time camera feed on it, then look at <a href="https://github.com/aditkumar1/Matrix-Vision">this</a> project
