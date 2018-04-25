@@ -1,20 +1,24 @@
-import java.awt.*;
-import java.util.*;
 import javax.swing.*;
-public class Main extends JFrame {
+import java.awt.*;
+import java.util.Random;
 
-    private static final int FONT_SIZE = 15;
-    private static final String TEXT = new String("あたアカサザジズゼゾシスセソキクケコイウエオジャな0123456789");
+public class Main extends JPanel {
+    private static final int FONT_SIZE = 10;
+    private static final String TEXT = new String(" あたアカサザジズゼゾシスセソキクケコイウエオジャな0123456789");
     private static Random random = new Random();
     private static JPanel[] rows;
+    private static Color[] columnColors;
 
     public void initializeComponent(){
+        this.setBackground(Color.black);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize);
         int totalNoOfRows= (this.getHeight()/FONT_SIZE)-1;
         rows= new JPanel[totalNoOfRows];
         for(int i=0;i<totalNoOfRows;i++){
             rows[i]=initializeRow();
         }
-        addRowsToFrame();
+        addRowsToPanel();
     }
     public JPanel initializeRow(){
         JPanel row =new JPanel();
@@ -22,30 +26,37 @@ public class Main extends JFrame {
         int totalNoOfCharacters= (this.getWidth() / FONT_SIZE)-1;
         row.setLayout(new GridLayout(0,totalNoOfCharacters));
         JLabel[] characters= new JLabel[totalNoOfCharacters];
+        if(columnColors==null)columnColors=new Color[totalNoOfCharacters];
+        int i=-1;
         for(JLabel character: characters){
+            i=i+1;
             int character_initial = random.nextInt(TEXT.length());
             character = new JLabel("" + TEXT.charAt(character_initial));
             character.setFont(new Font("monospaced", Font.PLAIN, FONT_SIZE));
-            character.setForeground(new Color(0, 80, 0));
+            if(columnColors[i]==null)columnColors[i]=new Color(0, random.nextInt(100), 0);
+            character.setForeground(columnColors[i]);
+            columnColors[i]=new Color(0,(columnColors[i].getGreen()+3)%100,0);
             row.add(character);
         }
         return row;
     }
-    public void updateFrame(){
+    public void updatePanel(){
         for(int i=rows.length-1;i>0;i--){
             rows[i]=rows[i-1];
         }
         rows[0]=initializeRow();
-        this.getContentPane().removeAll();
-        this.addRowsToFrame();
+        this.removeAll();
+        this.addRowsToPanel();
     }
-    public void addRowsToFrame(){
+    public void addRowsToPanel(){
         for(JPanel row: rows){
             this.add(row);
         }
     }
+
     public static void main(String[] args) {
-        Main frame = new Main();
+        JFrame frame = new JFrame();
+        Main panel=new Main();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -55,14 +66,15 @@ public class Main extends JFrame {
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().setBackground(Color.black);
-                frame.setLayout(new FlowLayout());
-                frame.initializeComponent();
+                frame.getContentPane().add(panel);
+                panel.setLayout(new FlowLayout());
+                panel.initializeComponent();
                 frame.setVisible(true);
                 Thread updateFrame = new Thread() {
                     public void run() {
                         try {
                             while (true) {
-                                frame.updateFrame();
+                                panel.updatePanel();
                                 SwingUtilities.updateComponentTreeUI(frame);
                                 Thread.sleep(50);
                             }
