@@ -33,9 +33,9 @@ public class Main extends JPanel {
             int character_initial = random.nextInt(TEXT.length());
             character = new JLabel("" + TEXT.charAt(character_initial));
             character.setFont(new Font("monospaced", Font.PLAIN, FONT_SIZE));
-            if(columnColors[i]==null)columnColors[i]=new Color(0, random.nextInt(100), 0);
+            if(columnColors[i]==null)columnColors[i]=new Color(0, random.nextInt(255), 0);
             character.setForeground(columnColors[i]);
-            columnColors[i]=new Color(0,(columnColors[i].getGreen()+3)%100,0);
+            columnColors[i]=new Color(0,(columnColors[i].getGreen()+3)%255,0);
             row.add(character);
         }
         return row;
